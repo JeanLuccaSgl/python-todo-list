@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "nome": "beber agua",
+        "status": true
+    },
+    {
+        "id": 3,
+        "nome": "tomar banho",
+        "status": false
+    }
+]
