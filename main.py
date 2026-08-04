@@ -8,9 +8,11 @@ def mostrarMenu():
         "Menu de Opções\n"
         "1. Adicionar\n"
         "2. Listar Tarefas\n"
-        "3. Concluir\n"
-        "4. Remover\n"
-        "5. Sair\n"
+        "3. Pesquisar Tarefa\n"
+        "4. Concluir\n"
+        "5. Remover\n"
+        "6. Estatísticas\n"
+        "7. Sair\n"
     )
 listaTarefas = carregarTarefas()
 opcUser = 0
@@ -30,11 +32,17 @@ while True:
         tarefas.listarTarefa(listaTarefas)
 
     elif opcUser == 3:
-        tarefas.concluirTarefa(listaTarefas)
+        tarefas.pesquisarNome(listaTarefas)
 
     elif opcUser == 4:
-        tarefas.removerTarefa(listaTarefas)
+        tarefas.concluirTarefa(listaTarefas)
 
     elif opcUser == 5:
+        tarefas.removerTarefa(listaTarefas)
+
+    elif opcUser == 6:
+        tarefas.estatisticas(listaTarefas)
+
+    elif opcUser == 7:
         salvarTarefas(listaTarefas)
         break

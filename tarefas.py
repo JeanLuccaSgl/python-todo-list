@@ -9,12 +9,28 @@ def adicionarTarefa(listaTarefas):
     geradorId += 1
 
     while True:                                                       #Verificação se o campo nomeTarefa está preenchido
-        nomeTarefa = input("Digite o nome da sua tarefa: ").strip
+        nomeTarefa = input("Digite o nome da sua tarefa: ").strip().lower()
 
         if nomeTarefa:
             break
 
         print("O nome da tarefa não pode estar vazio.")
+
+    for tarefa in listaTarefas:
+        if nomeTarefa == tarefa["nome"].lower():
+            while True:
+                opcAddNovamente = input("Já existe uma tarefa com esse nome. Deseja adicioná-la novamente? (S/N): ").upper()
+
+                if opcAddNovamente in ("S", "SIM"):
+                    break
+
+                elif opcAddNovamente in ("N", "NAO", "NÃO"):
+                    return
+
+                else:
+                    print("Digite um valor válido.")
+
+
 
     statusTarefa = False             #Define o status como falso/não concluído automaticamente
 
@@ -31,6 +47,7 @@ def adicionarTarefa(listaTarefas):
 def listarTarefa(listaTarefas):
     if not listaTarefas: #Verificação se a lista tá vazia, retorna True se tiver, logo, não precisa ter o == True
         print("Nenhuma tarefa encontrada")
+        return
 
     for tarefa in listaTarefas: #Percorre a lista de tarefas e se alguma estiver com status True/Concluído ele marca com [X], senão com [ ]
         if tarefa["status"]:
@@ -38,9 +55,40 @@ def listarTarefa(listaTarefas):
         else:
             print(f'[ ] {tarefa["id"]} - {tarefa["nome"]}')
 
+def pesquisarNome(listaTarefas):
+    encontrou = False
+
+    if not listaTarefas: #Verificação se a lista tá vazia
+        print("Nenhuma tarefa encontrada")
+        return
+
+    nomeTarefaUser = input("Digite o nome da sua tarefa: ").strip().lower()
+
+    if not nomeTarefaUser:
+        print("Por favor, digite um nome válido.")
+        return
+
+    for tarefa in listaTarefas:
+        if nomeTarefaUser in tarefa["nome"].lower():
+            encontrou = True
+
+            if tarefa["status"]:
+                print(f'[X] {tarefa["id"]} - {tarefa["nome"]}')
+
+            else:
+                print(f'[ ] {tarefa["id"]} - {tarefa["nome"]}')
+
+    if not encontrou:
+        print("Nenhuma tarefa encontrada")
 
 def concluirTarefa(listaTarefas):
     encontrou = False        #Variável para verificação se o id realmente existe, inicialmente não encontrou
+
+    if not listaTarefas: #Verificação se a lista tá vazia, retorna True se tiver, logo, não precisa ter o == True
+        print("Nenhuma tarefa encontrada")
+        return
+
+    listarTarefa(listaTarefas)
 
     while True:              #Loop e verificação de valor do usuário, se preencher sem um número, mostra mensagem e pede pra digitar novamente
         try:
@@ -68,8 +116,14 @@ def concluirTarefa(listaTarefas):
         print("Não existe nenhuma tarefa com esse ID.")
 
 
-def removerTarefa(listaTarefas):                                #Lógica semelhante a função de concuir tarea, mas removendo
+def removerTarefa(listaTarefas):                                #Lógica semelhante a função de concluir tarefa, mas removendo
     encontrou = False
+
+    if not listaTarefas: #Verificação se a lista tá vazia, retorna True se tiver, logo, não precisa ter o == True
+        print("Nenhuma tarefa encontrada")
+        return
+
+    listarTarefa(listaTarefas)
 
     while True:
         try:
@@ -90,5 +144,34 @@ def removerTarefa(listaTarefas):                                #Lógica semelha
     if not encontrou:
         print("Não existe nenhuma tarefa com esse ID.")
 
+def estatisticas(listaTarefas):
+    if not listaTarefas: #Verificação se a lista tá vazia, retorna True se tiver, logo, não precisa ter o == True
+        print("Nenhuma tarefa encontrada")
+        return
 
+    tarefasTotal = len(listaTarefas)
 
+    tarefasPendentes = 0
+    tarefasConcluidas = 0
+
+    for tarefa in listaTarefas:
+        if tarefa["status"]:
+            tarefasConcluidas += 1
+        else:
+            tarefasPendentes += 1
+
+    percentualConcluidas = (tarefasConcluidas / tarefasTotal) * 100
+    percentualPendentes = (tarefasPendentes / tarefasTotal) * 100
+
+    print("ESTATÍSTICAS")
+    print("-----------------")
+
+    print(f"Total de Tarefas: {tarefasTotal}")
+    print()
+
+    print(f"Concluídas: {tarefasConcluidas}")
+    print(f"Pendentes: {tarefasPendentes}")
+    print()
+
+    print(f"% Concluídas: {percentualConcluidas:.2f}%")
+    print(f"% Pendentes: {percentualPendentes:.2f}%")

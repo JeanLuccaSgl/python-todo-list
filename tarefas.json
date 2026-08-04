@@ -8,5 +8,20 @@
         "id": 3,
         "nome": "tomar banho",
         "status": false
+    },
+    {
+        "id": 4,
+        "nome": "beber agua",
+        "status": false
+    },
+    {
+        "id": 5,
+        "nome": "jantar",
+        "status": true
+    },
+    {
+        "id": 6,
+        "nome": "beber suco",
+        "status": false
     }
 ]
